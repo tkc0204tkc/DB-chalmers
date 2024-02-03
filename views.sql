@@ -6,10 +6,10 @@ CREATE VIEW BasicInformation AS (
 );
 
 CREATE VIEW FinishedCourses AS (
-    SELECT t.student, t.course, c.name, t.grade, c.credits
+    SELECT t.student, t.course, c.name as coursename, t.grade, c.credits
     FROM Taken t
     LEFT JOIN Courses c ON t.course = c.code
-    ORDER BY student, grade DESC
+    ORDER BY student, course ASC
 );
 
 CREATE VIEW Registrations AS (
@@ -81,9 +81,9 @@ CREATE VIEW RecommendedCourses AS (
 CREATE VIEW PathToGraduation AS (
     SELECT ml.student, COALESCE(tc.totalcredits,0) as totalcredits, ml.mandatoryleft, COALESCE(mc.mathcredits,0) as mathcredits, COALESCE(sc.seminarcourses,0) as seminarcourses,
     CASE 
-      WHEN (mandatoryleft > 0) OR (mathcredits < 20) OR (seminarcourses < 1) THEN 'f' 
-      WHEN (rc.credits is NULL) OR (rc.credits < 10) THEN 'f'
-    ELSE 't'
+      WHEN (mandatoryleft > 0) OR (mathcredits < 20) OR (seminarcourses < 1) THEN FALSE
+      WHEN (rc.credits is NULL) OR (rc.credits < 10) THEN FALSE
+    ELSE TRUE 
     END AS qualified
     FROM TotalCred tc
     FULL OUTER JOIN mandatoryLeft ml ON tc.student = ml.student

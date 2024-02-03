@@ -80,7 +80,7 @@ CREATE TABLE Registered (
 CREATE TABLE Taken (
     student DECIMAL(10) NOT NULL,
     course TEXT NOT NULL,
-    grade CHAR(1) DEFAULT '0' CHECK (grade IN ('0','U','3','4','5')),
+    grade CHAR(1) DEFAULT '0' CHECK (grade IN ('0','U','3','4','5')) NOT NULL,
     FOREIGN KEY (student) REFERENCES Students(idnr),
     FOREIGN KEY (course) REFERENCES Courses(code),
     PRIMARY KEY (student, course)
