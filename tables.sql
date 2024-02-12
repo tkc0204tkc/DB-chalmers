@@ -1,5 +1,5 @@
 CREATE TABLE Students (
-    idnr DECIMAL(10) PRIMARY KEY,
+    idnr CHAR(10) PRIMARY KEY,
     name TEXT NOT NULL,
     login TEXT NOT NULL,
     program TEXT NOT NULL
@@ -12,20 +12,20 @@ CREATE TABLE Branches (
 );
 
 CREATE TABLE Courses (
-    code TEXT PRIMARY KEY,
+    code CHAR(6) PRIMARY KEY,
     name TEXT NOT NULL, 
-    credits FLOAT NOT NULL,
+    credits FLOAT CHECK (credits > 0) NOT NULL,
     department TEXT NOT NULL
 );
 
 CREATE TABLE LimitedCourses (
-    code TEXT PRIMARY KEY,
-    capacity INT NOT NULL,
+    code CHAR(6) PRIMARY KEY,
+    capacity INT CHECK (capacity > 0) NOT NULL,
     FOREIGN KEY (code) REFERENCES Courses(code)
 );
 
 CREATE TABLE StudentBranches (
-    student DECIMAL(10) PRIMARY KEY,
+    student CHAR(10) PRIMARY KEY,
     branch TEXT NOT NULL,
     program TEXT NOT NULL,
     FOREIGN KEY (student) REFERENCES Students(idnr),
@@ -37,7 +37,7 @@ CREATE TABLE Classifications (
 );
 
 CREATE TABLE Classified (
-    course TEXT NOT NULL,
+    course CHAR(6) NOT NULL,
     classification TEXT NOT NULL,
     FOREIGN KEY (course) REFERENCES Courses(code),
     FOREIGN KEY (classification) REFERENCES Classifications(name),
@@ -45,14 +45,14 @@ CREATE TABLE Classified (
 );
 
 CREATE TABLE MandatoryProgram (
-    course TEXT NOT NULL,
+    course CHAR(6) NOT NULL,
     program TEXT NOT NULL,
     FOREIGN KEY (course) REFERENCES Courses(code),
     PRIMARY KEY (course, program)
 );
 
 CREATE TABLE MandatoryBranch (
-    course TEXT NOT NULL,
+    course CHAR(6) NOT NULL,
     branch TEXT NOT NULL,
     program TEXT NOT NULL,
     FOREIGN KEY (course) REFERENCES Courses(code),
@@ -61,7 +61,7 @@ CREATE TABLE MandatoryBranch (
 );
 
 CREATE TABLE RecommendedBranch (
-    course TEXT NOT NULL,
+    course CHAR(6) NOT NULL,
     branch TEXT NOT NULL,
     program TEXT NOT NULL,
     FOREIGN KEY (course) REFERENCES Courses(code),
@@ -70,25 +70,25 @@ CREATE TABLE RecommendedBranch (
 );
 
 CREATE TABLE Registered (
-    student DECIMAL(10) NOT NULL,
-    course TEXT NOT NULL,
+    student CHAR(10) NOT NULL,
+    course CHAR(6) NOT NULL,
     FOREIGN KEY (student) REFERENCES Students(idnr),
     FOREIGN KEY (course) REFERENCES Courses(code),
     PRIMARY KEY (student, course)
 );
 
 CREATE TABLE Taken (
-    student DECIMAL(10) NOT NULL,
-    course TEXT NOT NULL,
-    grade CHAR(1) DEFAULT '0' CHECK (grade IN ('0','U','3','4','5')) NOT NULL,
+    student CHAR(10) NOT NULL,
+    course CHAR(6) NOT NULL,
+    grade CHAR(1) CHECK (grade IN ('U','3','4','5')) NOT NULL,
     FOREIGN KEY (student) REFERENCES Students(idnr),
     FOREIGN KEY (course) REFERENCES Courses(code),
     PRIMARY KEY (student, course)
 );
 
 CREATE TABLE WaitingList (
-    student DECIMAL(10) NOT NULL,
-    course TEXT NOT NULL,
+    student CHAR(10) NOT NULL,
+    course CHAR(6) NOT NULL,
     position INT NOT NULL,
     FOREIGN KEY (student) REFERENCES Students(idnr),
     FOREIGN KEY (course) REFERENCES LimitedCourses(code),

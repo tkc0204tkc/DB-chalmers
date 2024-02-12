@@ -79,12 +79,7 @@ CREATE VIEW RecommendedCourses AS (
 );
 
 CREATE VIEW PathToGraduation AS (
-    SELECT ml.student, COALESCE(tc.totalcredits,0) as totalcredits, ml.mandatoryleft, COALESCE(mc.mathcredits,0) as mathcredits, COALESCE(sc.seminarcourses,0) as seminarcourses,
-    CASE 
-      WHEN (mandatoryleft > 0) OR (mathcredits < 20) OR (seminarcourses < 1) THEN FALSE
-      WHEN (rc.credits is NULL) OR (rc.credits < 10) THEN FALSE
-    ELSE TRUE 
-    END AS qualified
+    SELECT ml.student, COALESCE(tc.totalcredits,0) as totalcredits, ml.mandatoryleft, COALESCE(mc.mathcredits,0) as mathcredits, COALESCE(sc.seminarcourses,0) as seminarcourses, (mandatoryleft = 0 AND mathcredits >= 20 AND seminarcourses >= 1 AND rc.credits is NOT NULL AND rc.credits >= 10) as qualified
     FROM TotalCred tc
     FULL OUTER JOIN mandatoryLeft ml ON tc.student = ml.student
     LEFT JOIN MathCred mc ON ml.student = mc.student
