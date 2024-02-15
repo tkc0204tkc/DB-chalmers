@@ -1,3 +1,8 @@
+INSERT INTO Departments VALUES ('Department1','Dep1');
+
+INSERT INTO Programs VALUES ('Prog1','P1','Dep1');
+INSERT INTO Programs VALUES ('Prog2','P2','Dep1');
+
 INSERT INTO Branches VALUES ('B1','Prog1');
 INSERT INTO Branches VALUES ('B2','Prog1');
 INSERT INTO Branches VALUES ('B1','Prog2');
@@ -15,6 +20,8 @@ INSERT INTO Courses VALUES ('CCC333','C3',30,'Dep1');
 INSERT INTO Courses VALUES ('CCC444','C4',60,'Dep1');
 INSERT INTO Courses VALUES ('CCC555','C5',50,'Dep1');
 
+
+
 INSERT INTO LimitedCourses VALUES ('CCC222',1);
 INSERT INTO LimitedCourses VALUES ('CCC333',2);
 
@@ -26,7 +33,6 @@ INSERT INTO Classified VALUES ('CCC333','math');
 INSERT INTO Classified VALUES ('CCC444','math');
 INSERT INTO Classified VALUES ('CCC444','research');
 INSERT INTO Classified VALUES ('CCC444','seminar');
-
 
 INSERT INTO StudentBranches VALUES ('2222222222','B1','Prog1');
 INSERT INTO StudentBranches VALUES ('3333333333','B1','Prog2');

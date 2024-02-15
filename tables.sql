@@ -1,13 +1,30 @@
+CREATE TABLE Departments (
+    name TEXT NOT NULL,
+    abbr VARCHAR PRIMARY KEY,
+    UNIQUE (name)
+);
+
+CREATE TABLE Programs (
+    name TEXT PRIMARY KEY,
+    abbr VARCHAR NOT NULL,
+    department VARCHAR NOT NULL,
+    FOREIGN KEY (department) REFERENCES Departments(abbr)
+);
+
 CREATE TABLE Students (
     idnr CHAR(10) PRIMARY KEY,
     name TEXT NOT NULL,
     login TEXT NOT NULL,
-    program TEXT NOT NULL
+    program TEXT NOT NULL,
+    UNIQUE (login),
+    UNIQUE (idnr, program),
+    FOREIGN KEY (program) REFERENCES Programs(name)
 );
 
 CREATE TABLE Branches (
     name TEXT NOT NULL,
     program TEXT NOT NULL,
+    FOREIGN KEY (program) REFERENCES Programs(name),
     PRIMARY KEY (name, program)
 );
 
@@ -15,7 +32,8 @@ CREATE TABLE Courses (
     code CHAR(6) PRIMARY KEY,
     name TEXT NOT NULL, 
     credits FLOAT CHECK (credits > 0) NOT NULL,
-    department TEXT NOT NULL
+    department VARCHAR NOT NULL,
+    FOREIGN KEY (department) REFERENCES Departments(abbr)
 );
 
 CREATE TABLE LimitedCourses (
@@ -29,6 +47,7 @@ CREATE TABLE StudentBranches (
     branch TEXT NOT NULL,
     program TEXT NOT NULL,
     FOREIGN KEY (student) REFERENCES Students(idnr),
+    FOREIGN KEY (student, program) REFERENCES Students(idnr, program),
     FOREIGN KEY (branch, program) REFERENCES Branches(name, program)
 );
 
@@ -48,6 +67,7 @@ CREATE TABLE MandatoryProgram (
     course CHAR(6) NOT NULL,
     program TEXT NOT NULL,
     FOREIGN KEY (course) REFERENCES Courses(code),
+    FOREIGN KEY (program) REFERENCES Programs(name),
     PRIMARY KEY (course, program)
 );
 
@@ -92,6 +112,7 @@ CREATE TABLE WaitingList (
     position INT NOT NULL,
     FOREIGN KEY (student) REFERENCES Students(idnr),
     FOREIGN KEY (course) REFERENCES LimitedCourses(code),
-    PRIMARY KEY (student, course)
+    PRIMARY KEY (student, course),
+    UNIQUE (course, position)
 );
 
