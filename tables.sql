@@ -6,9 +6,15 @@ CREATE TABLE Departments (
 
 CREATE TABLE Programs (
     name TEXT PRIMARY KEY,
-    abbr VARCHAR NOT NULL,
+    abbr VARCHAR NOT NULL
+);
+
+CREATE TABLE Host (
     department VARCHAR NOT NULL,
-    FOREIGN KEY (department) REFERENCES Departments(abbr)
+    program TEXT NOT NULL,
+    FOREIGN KEY (department) REFERENCES Departments(abbr),
+    FOREIGN KEY (program) REFERENCES Programs(name),
+    PRIMARY KEY (department, program)
 );
 
 CREATE TABLE Students (
