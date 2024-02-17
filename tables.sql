@@ -42,6 +42,14 @@ CREATE TABLE Courses (
     FOREIGN KEY (department) REFERENCES Departments(abbr)
 );
 
+CREATE TABLE Prerequisites (
+    code CHAR(6) NOT NULL,
+    prerequisites CHAR(6) NOT NULL,
+    FOREIGN KEY (code) REFERENCES Courses(code),
+    FOREIGN KEY (prerequisites) REFERENCES Courses(code),
+    PRIMARY KEY (code, prerequisites)
+)
+
 CREATE TABLE LimitedCourses (
     code CHAR(6) PRIMARY KEY,
     capacity INT CHECK (capacity > 0) NOT NULL,
