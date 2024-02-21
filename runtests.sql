@@ -38,12 +38,18 @@ SET client_min_messages TO NOTICE; -- More talk
 -- Life-hack: When working on a new view you can write it as a query here (without creating a view) and when it works just add CREATE VIEW and put it in views.sql
 
 INSERT INTO Registrations VALUES ('1111111111','CCC111','registered');
-INSERT INTO Registrations VALUES ('1111111111','CCC111','registered');
+INSERT INTO Registrations VALUES ('5555555555','CCC222','registered');
+INSERT INTO Registrations VALUES ('3333333333','CCC222','registered');
+INSERT INTO Registrations VALUES ('5555555555','CCC333','registered');
 INSERT INTO Registrations VALUES ('3333333333','CCC333','registered');
-INSERT INTO Registrations VALUES ('4444444444','CCC333','registered');
-INSERT INTO Registrations VALUES ('2222222222','CCC444','registered');
-INSERT INTO Registrations VALUES ('5555555555','CCC444','registered');
-INSERT INTO Registrations VALUES ('6666666666','CCC444','registered');
-INSERT INTO Registrations VALUES ('4444444444','CCC333','registered');
 INSERT INTO Registrations VALUES ('4444444444','CCC444','registered');
-INSERT INTO Registrations VALUES ('6666666666','CCC333','registered');
+INSERT INTO Registrations VALUES ('4444444444','CCC111','registered');
+INSERT INTO Registrations VALUES ('1111111111','CCC111','registered');
+INSERT INTO Registrations VALUES ('5555555555','CCC222','registered');
+INSERT INTO Registrations VALUES ('5555555555','CCC444','registered');
+INSERT INTO Registrations VALUES ('2222222222','CCC444','registered');
+DELETE FROM Registrations WHERE student = '1111111111';
+INSERT INTO Registrations VALUES ('1111111111','CCC222','registered');
+DELETE FROM Registrations WHERE student = '3333333333' AND course = 'CCC222';
+DELETE FROM Registrations WHERE student = '2222222222' AND course = 'CCC222';
+INSERT INTO Registrations VALUES ('2222222222','CCC111','registered');
