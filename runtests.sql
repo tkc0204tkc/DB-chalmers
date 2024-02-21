@@ -17,7 +17,7 @@ SET client_min_messages TO NOTICE; -- More talk
 \ir tables.sql
 \ir inserts.sql
 \ir views.sql
-
+\ir triggers.sql
 
 
 -- Tests various queries from the assignment, uncomment these as you make progress
@@ -36,3 +36,14 @@ SET client_min_messages TO NOTICE; -- More talk
 
 
 -- Life-hack: When working on a new view you can write it as a query here (without creating a view) and when it works just add CREATE VIEW and put it in views.sql
+
+INSERT INTO Registrations VALUES ('1111111111','CCC111','registered');
+INSERT INTO Registrations VALUES ('1111111111','CCC111','registered');
+INSERT INTO Registrations VALUES ('3333333333','CCC333','registered');
+INSERT INTO Registrations VALUES ('4444444444','CCC333','registered');
+INSERT INTO Registrations VALUES ('2222222222','CCC444','registered');
+INSERT INTO Registrations VALUES ('5555555555','CCC444','registered');
+INSERT INTO Registrations VALUES ('6666666666','CCC444','registered');
+INSERT INTO Registrations VALUES ('4444444444','CCC333','registered');
+INSERT INTO Registrations VALUES ('4444444444','CCC444','registered');
+INSERT INTO Registrations VALUES ('6666666666','CCC333','registered');

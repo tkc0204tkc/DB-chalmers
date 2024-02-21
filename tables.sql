@@ -44,10 +44,10 @@ CREATE TABLE Courses (
 
 CREATE TABLE Prerequisites (
     code CHAR(6) NOT NULL,
-    prerequisites CHAR(6) NOT NULL,
+    prerequisite CHAR(6) NOT NULL,
     FOREIGN KEY (code) REFERENCES Courses(code),
-    FOREIGN KEY (prerequisites) REFERENCES Courses(code),
-    PRIMARY KEY (code, prerequisites)
+    FOREIGN KEY (prerequisite) REFERENCES Courses(code),
+    PRIMARY KEY (code, prerequisite)
 );
 
 CREATE TABLE LimitedCourses (
