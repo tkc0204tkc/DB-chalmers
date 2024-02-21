@@ -56,8 +56,8 @@ BEGIN
          RETURN OLD;
       ELSE
          RAISE NOTICE 'no change in waiting list';
+         RETURN OLD;
       END IF;
-      RETURN OLD;
    ELSE
       currentposition := (SELECT position FROM WaitingList WHERE course = OLD.course AND student = OLD.student);
       DELETE FROM WaitingList WHERE student = OLD.student AND course = OLD.course;
