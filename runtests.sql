@@ -53,3 +53,4 @@ SET client_min_messages TO NOTICE; -- More talk
 -- DELETE FROM Registrations WHERE student = '3333333333' AND course = 'CCC222';
 -- DELETE FROM Registrations WHERE student = '2222222222' AND course = 'CCC222';
 -- INSERT INTO Registrations VALUES ('2222222222','CCC111','registered');
+

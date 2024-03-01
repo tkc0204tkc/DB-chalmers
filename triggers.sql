@@ -11,27 +11,22 @@ DECLARE
 BEGIN
    CASE
     WHEN isregistered THEN 
-      RAISE NOTICE 'already registered';
-      RETURN NULL; 
+      RAISE EXCEPTION 'already registered';
     WHEN iswaiting THEN 
-      RAISE NOTICE 'already waiting';
-      RETURN NULL;
+      RAISE EXCEPTION 'already waiting';
     WHEN ispassed THEN
-      RAISE NOTICE 'already passed';
-      RETURN NULL;
+      RAISE EXCEPTION 'already passed';
     WHEN failingprereq > 0 THEN
-      RAISE NOTICE 'failing grade on % prereq', failingprereq;
-      RETURN NULL;
+      RAISE EXCEPTION 'failing grade on % prereq', failingprereq;
     WHEN prereqleft > 0 THEN 
-      RAISE NOTICE 'missing % prereq', prereqleft;
-      RETURN NULL;
-    WHEN seatsleft <= 0 THEN
-      RAISE NOTICE 'already full, added to waitng list (position %)', currentposition;
-      INSERT INTO WaitingList VALUES (NEW.student, NEW.course, currentposition);
-      RETURN NULL;
+      RAISE EXCEPTION 'missing % prereq', prereqleft;
    ELSE 
-   INSERT INTO Registered VALUES (NEW.student, NEW.course);
-   RAISE NOTICE 'registered';
+    IF seatsleft <= 0 THEN
+      INSERT INTO WaitingList VALUES (NEW.student, NEW.course, currentposition);
+      RAISE NOTICE 'already full, added to waiting list (position %)', currentposition;
+    ELSE
+      INSERT INTO Registered VALUES (NEW.student, NEW.course);
+      RAISE NOTICE 'registered'; END IF;
    RETURN NEW;
    END CASE;
 END;
