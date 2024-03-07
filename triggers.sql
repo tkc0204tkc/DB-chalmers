@@ -41,12 +41,12 @@ BEGIN
    IF OLD.status = 'registered' THEN 
       DELETE FROM Registered WHERE student = OLD.student AND course = OLD.course;
       seatsleft := (SELECT capacity FROM LimitedCourses WHERE code = OLD.course) - (SELECT COUNT(student) FROM Registered WHERE course = OLD.course);
-      IF EXISTS(SELECT code FROM LimitedCourses WHERE code = OLD.course) AND (SELECT COUNT(student) FROM WaitingList WHERE course = OLD.course) > 0 AND seatsleft > 0 THEN 
+      IF (SELECT COUNT(student) FROM WaitingList WHERE course = OLD.course) > 0 AND seatsleft > 0 THEN 
          firstinlist := (SELECT student FROM WaitingList WHERE position = 1 AND course = OLD.course);
          DELETE FROM WaitingList WHERE student = firstinlist AND course = OLD.course;
          INSERT INTO Registered VALUES (firstinlist, OLD.course);
          RAISE NOTICE 'move s%', firstinlist;
-         UPDATE WaitingList SET position = position -1 WHERE position > 1;
+         UPDATE WaitingList SET position = position -1 WHERE position > 1 AND course = OLD.course;
          RAISE NOTICE 'updated rest in waiting list';
          RETURN OLD;
       ELSE
